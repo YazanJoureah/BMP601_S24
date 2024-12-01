@@ -1,0 +1,23 @@
+<resources>
+
+    <string name="app_name">7even Sales</string>
+    <string name="Company_Logo">Company Logo</string>
+    <string name="company_name">7even Sales</string>
+    <string name="total_sales">Total Sales</string>
+    <string name="commissions_earned">Commissions Earned</string>
+    <string name="sales_trends">Sales Trends</string>
+    <string name="quick_links">Quick Links</string>
+    <string name="add_representative">Add Representative</string>
+    <string name="email">Email</string>
+    <string name="name">Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="representative_details">Representative Details</string>
+    <string name="delete_representative">Delete Representative</string>
+    <string name="update_representative">Update Representative</string>
+    <string name="Area">Area</string>
+    <string name="Action">Action</string>
+    <string name="select_region">Select Region</string>
+    <string name="Add_Sales">Add Sales</string>
+    <string name="choose_represantitive">Choose Represantitive</string>
+
+</resources>
