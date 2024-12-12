@@ -8,8 +8,9 @@ public class Sales {
    private int RepresentativeID ;
    private int Month;
    private int Year;
+   private int RegionID;
    private float Amount;
-   private float Commission;
+
 
 
 
@@ -28,9 +29,6 @@ public class Sales {
         return Amount;
     }
 
-    public float getCommission() {
-        return Commission;
-    }
 
     public int getMonth() {
         return Month;
@@ -48,10 +46,6 @@ public class Sales {
         Amount = amount;
     }
 
-    public void setCommission(float commission) {
-        Commission = commission;
-    }
-
     public void setMonth(int month) {
         Month = month;
     }
@@ -64,6 +58,14 @@ public class Sales {
         SaleID = saleID;
     }
 
+    public void setRegionID(int region) {
+        RegionID = region;
+    }
+
+    public int getRegionID() {
+        return RegionID;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -72,8 +74,8 @@ public class Sales {
                 ", RepresentativeID=" + RepresentativeID +
                 ", Month=" + Month +
                 ", Year=" + Year +
+                ", RegionID=" + RegionID +
                 ", Amount=" + Amount +
-                ", Commission=" + Commission +
                 '}';
     }
 }

@@ -9,7 +9,15 @@ public class SalesRepresentative {
     private String email;
     private int regionID;
 
-       // Getters and Setters
+    public SalesRepresentative(String s, int i) {
+
+    }
+
+    public SalesRepresentative() {
+
+    }
+
+    // Getters and Setters
 
     public int getRepresentativeID() {
         return representativeID;

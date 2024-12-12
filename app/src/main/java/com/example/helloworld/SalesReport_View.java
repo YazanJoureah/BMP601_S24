@@ -1,17 +1,14 @@
 package com.example.helloworld;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,57 +19,50 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.RegionController;
+import controller.RepresentativeController;
 import controller.SalesController;
 import model.Region;
-import controller.RegionController;
 import model.Sales;
 import model.SalesRepresentative;
-import controller.RepresentativeController;
 
-public class Sales_View extends AppCompatActivity {
+public class SalesReport_View extends AppCompatActivity {
+
 
     private Spinner spinnerRep;
     private RepresentativeController representativeController;
-    private int currentRepID;
     private SalesRepresentative currentRep;
+    private int currentRepID;
     private int currentRepRegionID;
     private RegionController regionController;
     private SalesController salesController;
-    private List<SalesRepresentative> AllRepresentative=new ArrayList<>();
-    private List<Region> AllRegions=new ArrayList<>();
-    private TextView repName,repEmail,repPhone,repArea;
+    private List<SalesRepresentative> AllRepresentative = new ArrayList<>();
     private TableLayout salesTable;
     private Spinner monthSpinner;
     private Spinner yearSpinner;
     private int month;
     private int year;
-    private long totalCommission = 0;
-    private TextView commissionView;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_sales_view);
+        setContentView(R.layout.activity_sales_report_view);
 
         initializeViews();
         setupControllers();
         setupSpinner();
-        populateSalesTable();
+        getSales();
         setupWindowInsets();
-        calculateCommission();
-        setupSubmitButton();
+
+
     }
 
     private void initializeViews() {
-        repName = findViewById(R.id.repName);
-        repEmail = findViewById(R.id.repEmail);
-        repPhone = findViewById(R.id.repPhone);
-        repArea = findViewById(R.id.repArea);
         spinnerRep = findViewById(R.id.representativeSpinner);
         salesTable = findViewById(R.id.salesTable);
         monthSpinner = findViewById(R.id.monthSpinner);
         yearSpinner = findViewById(R.id.yearSpinner);
-        commissionView=findViewById(R.id.commissionView);
     }
 
     private void setupControllers() {
@@ -95,11 +85,7 @@ public class Sales_View extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SalesRepresentative selectedRep = (SalesRepresentative) parent.getItemAtPosition(position);
-                if (selectedRep.getRepresentativeID() != -1) { // Check if it's not the default item
-                    updateRepresentativeDetails(selectedRep);
-                } else {
-                    clearRepresentativeDetails(); // Clear details if default is selected
-                }
+                currentRepID=selectedRep.getRepresentativeID();
             }
 
             @Override
@@ -153,7 +139,7 @@ public class Sales_View extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(parent.getSelectedItemPosition()!=0){
-                year = Integer.parseInt((String) parent.getItemAtPosition(position));
+                    year = Integer.parseInt((String) parent.getItemAtPosition(position));
 
                 }
             }
@@ -165,116 +151,38 @@ public class Sales_View extends AppCompatActivity {
         });
     }
 
-
-    private void clearRepresentativeDetails() {
-        repName.setText("");
-        repEmail.setText("");
-        repPhone.setText("");
-        repArea.setText("");
-    }
-
-
-    private void updateRepresentativeDetails(SalesRepresentative selectedRep) {
-        currentRepID = selectedRep.getRepresentativeID();
-        currentRep = representativeController.getRepresentativeById(currentRepID);
-        Region selectedRepRegion = regionController.getRegionById(selectedRep.getRegionID());
-        currentRepRegionID = selectedRep.getRegionID();
-        repName.setText(currentRep.getName());
-        repEmail.setText(currentRep.getEmail());
-        repPhone.setText(currentRep.getPhoneNumber());
-        repArea.setText(selectedRepRegion.getRegionName());
-    }
-
-    private void setupSubmitButton() {
-        Button submitButton = findViewById(R.id.submitButton);
-        submitButton.setOnClickListener(v -> submitSales());
-    }
-
-    private void populateSalesTable() {
-        AllRegions = regionController.getRegions();
-        for (Region region : AllRegions) {
-            addRegionToSalesTable(region);
+    private void getSales(){
+         List<Sales> salesList=new ArrayList<>();
+         salesList=salesController.getSalesByRepresentativeAndDate(currentRepID,month,year);
+        for (Sales sale:salesList
+             ) {
+            addToSalesTable(sale);
         }
     }
 
-    private void addRegionToSalesTable(Region region) {
+    private void addToSalesTable(Sales sale) {
         TableRow row = new TableRow(this);
-
-        TextView textNameView = new TextView(this);
-        textNameView.setText(region.getRegionName());
-
-        EditText editSales = new EditText(this);
-        editSales.setOnFocusChangeListener((v, hasFocus) -> calculateCommission());
-
-        // Store the RegionID as a tag in the EditText
-        editSales.setTag(region.getRegionID());
-
-        row.addView(textNameView);
-        row.addView(editSales);
+        TextView textMonthView = new TextView(this);
+        textMonthView.setText(sale.getMonth()+"");
+        TextView textYearView = new TextView(this);
+        textYearView.setText(sale.getYear()+"");
+      /*  TextView textAreaView = new TextView(this);
+        textMonthView.setText(regionController.getRegionById(sale.getArea()));*/
+        TextView textAmountView = new TextView(this);
+        textAmountView.setText(sale.getAmount()+"");
+        row.addView(textMonthView);
+        row.addView(textYearView);
+        row.addView(textAmountView);
         salesTable.addView(row);
     }
 
 
     private void setupWindowInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.Sales_View), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.SalesReport_View), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
     }
 
-    private void calculateCommission() {
-
-
-        for (int i = 0; i < salesTable.getChildCount(); i++) {
-            TableRow row = (TableRow) salesTable.getChildAt(i);
-            EditText editSales = (EditText) row.getChildAt(1); // Assuming sales input is the second child
-            String salesInput = editSales.getText().toString();
-
-            if (!salesInput.isEmpty()) {
-                long sales = Long.parseLong(salesInput);
-                totalCommission += (long) calculateIndividualCommission(sales,i+1);
-            }
-        }
-
-        commissionView.setText(""+totalCommission);
-        displayTotalCommission(totalCommission);
-    }
-
-    private double calculateIndividualCommission(long sales,int regionID) {
-        if(currentRepRegionID==regionID){
-            if (sales > 100000000) {
-                return (100000000 * 0.05) + ((sales - 100000000) * 0.07);
-            } else {
-                return sales * 0.05;
-            }
-        }else {
-            return sales * 0.03;
-        }
-    }
-
-    private void displayTotalCommission(long totalCommission) {
-        Toast.makeText(this, "Total Commission: " + totalCommission, Toast.LENGTH_LONG).show();
-    }
-
-    private void submitSales() {
-        for (int i = 0; i < salesTable.getChildCount(); i++) {
-            TableRow row = (TableRow) salesTable.getChildAt(i);
-            EditText editSales = (EditText) row.getChildAt(1); // Assuming sales input is the second child
-
-            if (!editSales.getText().toString().isEmpty()) {
-                Sales sale = new Sales();
-                sale.setYear(year);
-                sale.setMonth(month);
-                sale.setRepresentativeID(currentRepID);
-                sale.setAmount(Float.parseFloat(editSales.getText().toString()));
-                sale.setRegionID((int) editSales.getTag()); // Get the RegionID from the tag
-
-                if (!salesController.addSale(sale)) {
-                    editSales.setBackgroundColor(Color.RED); // Use Color.RED for error indication
-                }
-            }
-        }
-    }
 }
-

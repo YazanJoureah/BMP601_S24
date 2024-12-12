@@ -16,16 +16,17 @@ public class SalesController {
         dbHelper = new DatabaseHelper(context);
     }
 
-    public void addSale(Sales sale) {
+    public boolean addSale(Sales sale) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("RepresentativeID", sale.getRepresentativeID());
         values.put("Month", sale.getMonth());
         values.put("Year", sale.getYear());
+        values.put("RegionID",sale.getRegionID());
         values.put("Amount", sale.getAmount());
-        values.put("Commission", sale.getCommission());
         db.insert("Sales", null, values);
         db.close();
+        return false;
     }
 
     public List<Sales> getAllSales() {
@@ -39,8 +40,8 @@ public class SalesController {
                 sale.setRepresentativeID(cursor.getInt(1));
                 sale.setMonth(cursor.getInt(2));
                 sale.setYear(cursor.getInt(3));
-                sale.setAmount(cursor.getFloat(4));
-                sale.setCommission(cursor.getFloat(5));
+                sale.setRegionID(cursor.getInt(4));
+                sale.setAmount(cursor.getFloat(5));
                 salesList.add(sale);
             } while (cursor.moveToNext());
         }
@@ -62,8 +63,8 @@ public class SalesController {
                 sale.setRepresentativeID(cursor.getInt(1));
                 sale.setMonth(cursor.getInt(2));
                 sale.setYear(cursor.getInt(3));
-                sale.setAmount(cursor.getFloat(4));
-                sale.setCommission(cursor.getFloat(5));
+                sale.setRegionID(cursor.getInt(4));
+                sale.setAmount(cursor.getFloat(5));
                 salesList.add(sale);
             }while (cursor.moveToNext());
 

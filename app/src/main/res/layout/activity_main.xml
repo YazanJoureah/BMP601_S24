@@ -51,6 +51,7 @@
         android:rowCount="2">
 
         <TextView
+            android:id="@+id/salesReport"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
@@ -65,6 +66,7 @@
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/commissionReport"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
@@ -78,6 +80,7 @@
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/representativeButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
@@ -86,11 +89,12 @@
             android:background="?attr/colorAccent"
             android:gravity="center"
             android:padding="16dp"
-            android:text="@string/sales_trends"
+            android:text="@string/representative"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/addSalesButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
@@ -99,7 +103,7 @@
             android:background="?attr/colorAccent"
             android:gravity="center"
             android:padding="16dp"
-            android:text="@string/quick_links"
+            android:text="@string/add_sales"
             android:textColor="@color/white"
             android:textSize="18sp" />
     </GridLayout>

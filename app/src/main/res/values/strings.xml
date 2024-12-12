@@ -3,7 +3,7 @@
     <string name="app_name">7even Sales</string>
     <string name="Company_Logo">Company Logo</string>
     <string name="company_name">7even Sales</string>
-    <string name="total_sales">Total Sales</string>
+    <string name="total_sales">Sales Report</string>
     <string name="commissions_earned">Commissions Earned</string>
     <string name="sales_trends">Sales Trends</string>
     <string name="quick_links">Quick Links</string>
@@ -19,5 +19,14 @@
     <string name="select_region">Select Region</string>
     <string name="Add_Sales">Add Sales</string>
     <string name="choose_represantitive">Choose Represantitive</string>
+    <string name="submit">Submit</string>
+    <string name="representative_image">Representative Image</string>
+    <string name="sales">Sales</string>
+    <string name="total_comission">Total Comission</string>
+    <string name="representative">Representatives</string>
+    <string name="add_sales">Add Sales</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+    <string name="amount">Amount</string>
 
 </resources>

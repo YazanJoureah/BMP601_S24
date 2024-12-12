@@ -2,6 +2,7 @@ package com.example.helloworld;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,11 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    private TextView addSalesButton;
+    private TextView repButton;
+    private TextView salesReport;
+    private TextView commissionReport;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,8 +26,32 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button salesButton = findViewById(R.id.button_sales);
+        addSalesButton=findViewById(R.id.addSalesButton);
+        repButton=findViewById(R.id.representativeButton);
+        salesReport=findViewById(R.id.salesReport);
+        commissionReport=findViewById(R.id.commissionReport);
         salesButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, RepresentativeView.class);
+            startActivity(intent);
+        });
+
+        repButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, RepresentativeView.class);
+            startActivity(intent);
+        });
+
+        addSalesButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, Sales_View.class);
+            startActivity(intent);
+        });
+
+        salesReport.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SalesReport_View.class);
+            startActivity(intent);
+        });
+
+        commissionReport.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CommissionReport_View.class);
             startActivity(intent);
         });
 
@@ -33,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
 
 
 }

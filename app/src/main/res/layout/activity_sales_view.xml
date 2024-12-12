@@ -1,87 +1,125 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Sales_View"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@color/white">
+    android:background="@color/light_gray"
+    android:padding="20dp">
 
-    <TextView
-        android:id="@+id/titleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:paddingBottom="16dp"
-        android:text="@string/Add_Sales"
-        android:textSize="24sp"
-        android:textStyle="bold" />
 <LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical">
+
+<Spinner
+    android:id="@+id/representativeSpinner"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_marginBottom="16dp"
+    android:minHeight="48dp"
+    android:background="@color/white"
+android:padding="8dp" />
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Representative Details"
+    android:textSize="18sp"
+    android:textStyle="bold"
+    android:textColor="@color/black"
+    android:layout_marginBottom="8dp" />
+
+<TextView
+    android:id="@+id/repName"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Name"
+    android:background="@android:color/transparent"
+    android:padding="8dp" />
+
+<TextView
+    android:id="@+id/repEmail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Email"
+    android:background="@android:color/transparent"
+    android:padding="8dp" />
+
+<TextView
+    android:id="@+id/repPhone"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Phone"
+    android:background="@android:color/transparent"
+    android:padding="8dp" />
+
+<TextView
+    android:id="@+id/repArea"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Area"
+    android:background="@android:color/transparent"
+    android:padding="8dp" />
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Select Month and Year"
+    android:textSize="18sp"
+    android:textStyle="bold"
+    android:textColor="@color/black"
+android:layout_marginTop="16dp"
+android:layout_marginBottom="8dp" />
+
+<Spinner
+    android:id="@+id/monthSpinner"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    android:minHeight="48dp"
+    android:background="@color/white"
+android:padding="8dp" />
+
+<Spinner
+    android:id="@+id/yearSpinner"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    android:minHeight="48dp"
+    android:background="@color/white"
+android:padding="8dp" />
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Sales by Region"
+    android:textSize="18sp"
+    android:textStyle="bold"
+    android:textColor="@color/black"
+android:layout_marginTop="16dp"
+android:layout_marginBottom="8dp" />
+
+<TableLayout
+    android:id="@+id/salesTable"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="1" />
+
     <TextView
-        android:id="@+id/chooseRep"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/choose_represantitive"
-        android:textSize="16dp" />
-    <Spinner
-        android:id="@+id/representativeSpinner"
+        android:id="@+id/commissionView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:background="@color/white"/>
-
-</LinearLayout>
-
-    <TextView
-        android:id="@+id/selectedRepInfo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Representative Info"
-        android:textSize="18sp"
-        android:paddingTop="16dp"/>
-
-    <ImageView
-        android:id="@+id/repImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:contentDescription="Representative Image"/>
-
-    <EditText
-        android:id="@+id/salesInputArea1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Sales for Area 1"
-        android:inputType="number"
-        android:padding="10dp"
-        android:background="@color/white"/>
-
-    <EditText
-        android:id="@+id/salesInputArea2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Sales for Area 2"
-        android:inputType="number"
-        android:padding="10dp"
-        android:background="@color/white"/>
-
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textColor="@color/red"/>
     <Button
-        android:id="@+id/calculateButton"
+        android:id="@+id/submitButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Calculate Commission"
-        android:background="@color/colorPrimary"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="16dp"/>
-
-    <TextView
-        android:id="@+id/commissionResult"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Commission Result"
-        android:textSize="18sp"
-        android:paddingTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:background="@drawable/ButtonColor"
+        android:text="Submit"
+        android:textColor="#000000" />
 
 </LinearLayout>
+
+    </ScrollView>

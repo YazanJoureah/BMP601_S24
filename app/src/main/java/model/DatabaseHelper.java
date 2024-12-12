@@ -42,8 +42,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 "RepresentativeID INTEGER," +
                 "Month INTEGER NOT NULL," +
                 "Year INTEGER NOT NULL," +
+                "RegionID INTEGER NOT NULL,"+
                 "Amount DECIMAL(10, 2) NOT NULL," +
-                "Commission DECIMAL(10, 2)," +
                 "FOREIGN KEY (RepresentativeID) REFERENCES SalesRepresentative(RepresentativeID)" +
                 ");");
 

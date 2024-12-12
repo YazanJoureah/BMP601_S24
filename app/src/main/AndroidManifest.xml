@@ -13,15 +13,17 @@
         android:theme="@style/Theme.HelloWorld"
         tools:targetApi="31">
         <activity
+            android:name=".CommissionReport_View"
+            android:exported="true" />
+        <activity
+            android:name=".SalesReport_View"
+            android:exported="true" />
+        <activity
             android:name=".Sales_View"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".RepresentativeView"
             android:exported="true" />
-        <activity
-            android:name=".SalesActivity"
-            android:exported="true"
-            android:label="hi" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
