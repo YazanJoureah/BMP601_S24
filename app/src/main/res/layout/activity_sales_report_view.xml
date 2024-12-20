@@ -9,7 +9,7 @@ android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SalesReport_View"
     android:padding="20dp"
-    android:background="@color/background">
+    android:background="@color/white">
 
     <TextView
         android:layout_width="wrap_content"
@@ -63,25 +63,37 @@ android:layout_height="match_parent"
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:stretchColumns="1" >
+        android:stretchColumns="0,1,2,3"
+        android:background="#C3C3C3"
+        android:padding="8dp">
 
-        <TableRow>
+        <TableRow
+            android:background="#E0E0E0"
+            android:padding="8dp">
+
             <TextView
                 android:text="@string/month"
                 android:layout_width="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textAlignment="center"
+                />
             <TextView
                 android:text="@string/year"
                 android:layout_width="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textAlignment="center"
+                />
             <TextView
                 android:text="@string/Area"
                 android:layout_width="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textAlignment="center"
+                />
             <TextView
                 android:text="@string/amount"
                 android:layout_width="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textAlignment="center" />
         </TableRow>
     </TableLayout>
 
@@ -89,6 +101,7 @@ android:layout_height="match_parent"
         android:id="@+id/salesTable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:stretchColumns="1" />
-
+        android:stretchColumns="0,1,2,3"
+        android:background="#C3C3C3"
+        android:padding="8dp" />
 </LinearLayout>

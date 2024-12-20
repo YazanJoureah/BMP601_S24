@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import model.DatabaseHelper;
 import model.SalesRepresentative;
 
 public class RepresentativeController {
-    private DatabaseHelper dbHelper;
+    private final DatabaseHelper dbHelper;
 
     public RepresentativeController(Context context) {
         dbHelper = new DatabaseHelper(context);
@@ -24,6 +25,7 @@ public class RepresentativeController {
         values.put("Name", representative.getName());
         values.put("PhoneNumber", representative.getPhoneNumber());
         values.put("Email", representative.getEmail());
+        values.put("ImageUri", String.valueOf(representative.getImageUri()));
         values.put("RegionID", representative.getRegionID());
 
         db.insert("SalesRepresentative", null, values);
@@ -43,7 +45,9 @@ public class RepresentativeController {
                 salesRep.setName(cursor.getString(1));
                 salesRep.setPhoneNumber(cursor.getString(2));
                 salesRep.setEmail(cursor.getString(3));
-                salesRep.setRegionID(cursor.getInt(4));
+                salesRep.setImageUri(Uri.parse(cursor.getString(4)));
+                salesRep.setRegionID(cursor.getInt(5));
+
                 representatives.add(salesRep);
             } while (cursor.moveToNext());
         }
@@ -64,7 +68,8 @@ public class RepresentativeController {
                 representative.setName(cursor.getString(1));
                 representative.setPhoneNumber(cursor.getString(2));
                 representative.setEmail(cursor.getString(3));
-                representative.setRegionID(cursor.getInt(4));
+                representative.setImageUri(Uri.parse(cursor.getString(4)));
+                representative.setRegionID(cursor.getInt(5));
 
             } while (cursor.moveToNext());
         }
@@ -86,7 +91,8 @@ public class RepresentativeController {
                 salesRep.setName(cursor.getString(1));
                 salesRep.setPhoneNumber(cursor.getString(2));
                 salesRep.setEmail(cursor.getString(3));
-                salesRep.setRegionID(cursor.getInt(4));
+                salesRep.setImageUri(Uri.parse(cursor.getString(4)));
+                salesRep.setRegionID(cursor.getInt(5));
                 representatives.add(salesRep);
             } while (cursor.moveToNext());
         }
@@ -101,6 +107,7 @@ public class RepresentativeController {
         values.put("Name", representative.getName());
         values.put("PhoneNumber", representative.getPhoneNumber());
         values.put("Email", representative.getEmail());
+        values.put("ImageUri", String.valueOf(representative.getImageUri()));
         values.put("RegionID", representative.getRegionID());
 
         db.update("SalesRepresentative", values,

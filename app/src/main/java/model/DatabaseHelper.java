@@ -3,17 +3,22 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import androidx.annotation.NonNull;
+
 //This class will handle the creation and management of the SQLite database.
 public class DatabaseHelper extends SQLiteOpenHelper{
     private static final String DATABASE_NAME = "SalesDB.db";
     private static final int DATABASE_VERSION = 1;
 
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context,
+                DATABASE_NAME,
+                null,
+                DATABASE_VERSION);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(@NonNull SQLiteDatabase db) {
         // Create Region Table
         db.execSQL("CREATE TABLE Region (" +
                 "RegionID INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -32,6 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 "Name TEXT NOT NULL," +
                 "PhoneNumber TEXT," +
                 "Email TEXT," +
+                "ImageUri TEXT,"+
                 "RegionID INTEGER," +
                 "FOREIGN KEY (RegionID) REFERENCES Region(RegionID)" +
                 ");");
@@ -54,8 +60,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 "Month INTEGER NOT NULL," +
                 "Year INTEGER NOT NULL," +
                 "Amount DECIMAL(10, 2) NOT NULL," +
-                "FOREIGN KEY (RepresentativeID) REFERENCES SalesRepresentative(RepresentativeID)," +
-                "UNIQUE (RepresentativeID, Month, Year)" +
+                "FOREIGN KEY (RepresentativeID) REFERENCES SalesRepresentative(RepresentativeID)"+
                 ");");
 
     }

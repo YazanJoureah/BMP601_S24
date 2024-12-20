@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Sales_View"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray"
+    android:padding="10dp">
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
+    android:background="@color/white"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
@@ -24,6 +31,7 @@
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:padding="10dp"
+        android:textColor="@color/black"
         android:textColorHint="#546E7A"/>
 
     <EditText
@@ -35,6 +43,7 @@
         android:inputType="phone"
         android:minHeight="48dp"
         android:padding="10dp"
+        android:textColor="@color/black"
         android:textColorHint="#546E7A"/>
 
     <EditText
@@ -46,6 +55,7 @@
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
         android:padding="10dp"
+        android:textColor="@color/black"
         android:textColorHint="#546E7A"/>
 
     <Spinner
@@ -56,6 +66,24 @@
         android:minHeight="48dp"
         android:padding="10dp"
         android:hint="@string/select_region"/>
+
+    <ImageView
+        android:id="@+id/imageViewRepresentative"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:contentDescription="Representative Image"
+        android:scaleType="fitCenter"
+        android:background="@color/light_gray"
+        /> <!-- Placeholder image -->
+
+    <Button
+        android:id="@+id/buttonSelectImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center"
+        android:text="Select Image" />
 
     <Button
         android:id="@+id/buttonAddRepresentative"
@@ -70,11 +98,15 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:stretchColumns="0,1,2"
-        android:layout_marginTop="16dp"
-        android:id="@+id/tableLayout">
+        android:stretchColumns="0,1,2,3"
+        android:background="#C3C3C3"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        >
 
-        <TableRow>
+        <TableRow
+            android:background="#E0E0E0"
+            android:padding="8dp">
             <TextView
                 android:text="@string/name"
                 android:layout_width="0dp"
@@ -89,4 +121,12 @@
                 android:layout_weight="1"/>
         </TableRow>
     </TableLayout>
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0,1,2,3,4"
+        android:background="#C3C3C3"
+        android:padding="8dp" />
 </LinearLayout>
+</ScrollView>

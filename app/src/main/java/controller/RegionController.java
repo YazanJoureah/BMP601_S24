@@ -31,7 +31,8 @@ public class RegionController {
 
     public List<Region> getRegions() {
         List<Region> regions = new ArrayList<>();
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db;
+        db = dbHelper.getReadableDatabase();
         String query="SELECT * FROM Region";
         Cursor cursor = db.rawQuery(query,null);
 

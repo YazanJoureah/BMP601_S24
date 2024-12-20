@@ -1,10 +1,11 @@
 package com.example.helloworld;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
+
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -16,7 +17,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import controller.RegionController;
@@ -31,17 +32,25 @@ public class SalesReport_View extends AppCompatActivity {
 
     private Spinner spinnerRep;
     private RepresentativeController representativeController;
-    private SalesRepresentative currentRep;
     private int currentRepID;
-    private int currentRepRegionID;
     private RegionController regionController;
     private SalesController salesController;
-    private List<SalesRepresentative> AllRepresentative = new ArrayList<>();
     private TableLayout salesTable;
     private Spinner monthSpinner;
     private Spinner yearSpinner;
     private int month;
     private int year;
+    // Create an array of months
+    String[] MONTHS = new String[] {
+            "Select Month", "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+    };
+
+    // Create an array of years (e.g., from 2020 to 2030)
+    String[] YEARS = new String[] {
+            "Select Year", "2020", "2021", "2022", "2023", "2024", "2025",
+            "2026", "2027", "2028", "2029", "2030"
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +60,7 @@ public class SalesReport_View extends AppCompatActivity {
 
         initializeViews();
         setupControllers();
-        setupSpinner();
-        getSales();
+        setupSpinners();
         setupWindowInsets();
 
 
@@ -70,14 +78,18 @@ public class SalesReport_View extends AppCompatActivity {
         regionController = new RegionController(this);
         salesController=new SalesController(this);
     }
+    private void setupSpinners() {
+        setupRepresentativeSpinner();
+        setupMonthSpinner();
+        setupYearSpinner();
+    }
 
-    private void setupSpinner() {
-        AllRepresentative = representativeController.getRepresentatives();
+    private void setupRepresentativeSpinner() {
+        List<SalesRepresentative> allRepresentatives = representativeController.getRepresentatives();
+        allRepresentatives.add(0, new SalesRepresentative("--Representative Name", -1));
 
-        // Add a default item
-        AllRepresentative.add(0, new SalesRepresentative("--Representative Name", -1)); // Assuming constructor takes name and ID
-
-        ArrayAdapter<SalesRepresentative> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, AllRepresentative);
+        ArrayAdapter<SalesRepresentative> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, allRepresentatives);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRep.setAdapter(adapter);
 
@@ -85,7 +97,7 @@ public class SalesReport_View extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SalesRepresentative selectedRep = (SalesRepresentative) parent.getItemAtPosition(position);
-                currentRepID=selectedRep.getRepresentativeID();
+                currentRepID = selectedRep.getRepresentativeID();
             }
 
             @Override
@@ -93,66 +105,50 @@ public class SalesReport_View extends AppCompatActivity {
                 currentRepID = -1;
             }
         });
+    }
 
-
-
-// Create an array of months
-        String[] months = new String[] {
-                "Select Month", "January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"
-        };
-
-// Create an array of years (e.g., from 2020 to 2030)
-        String[] years = new String[] {
-                "Select Year", "2020", "2021", "2022", "2023", "2024", "2025",
-                "2026", "2027", "2028", "2029", "2030"
-        };
-
-// Create ArrayAdapter for months
-        ArrayAdapter<String> monthAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, months);
-        monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        monthSpinner.setAdapter(monthAdapter);
-
-// Create ArrayAdapter for years
-        ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, years);
-        yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        yearSpinner.setAdapter(yearAdapter);
-
-        monthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    private void setupMonthSpinner() {
+        setupSpinner(monthSpinner, MONTHS, new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(parent.getSelectedItemPosition()!=0){
-                    month = parent.getSelectedItemPosition();
-                }
-
+                month = (position != 0) ? position : 0;
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                month = 0;
-            }
-        });
-
-        yearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(parent.getSelectedItemPosition()!=0){
-                    year = Integer.parseInt((String) parent.getItemAtPosition(position));
-
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                year = 0;
+                // No action needed
             }
         });
     }
 
+    private void setupYearSpinner() {
+        setupSpinner(yearSpinner, YEARS, new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0) {
+                    year = Integer.parseInt((String) parent.getItemAtPosition(position));
+                    getSales();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // No action needed
+            }
+        });
+    }
+
+    private void setupSpinner(Spinner spinner, String[] items, AdapterView.OnItemSelectedListener listener) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, items);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(listener);
+    }
+
+
     private void getSales(){
-         List<Sales> salesList=new ArrayList<>();
+         List<Sales> salesList;
          salesList=salesController.getSalesByRepresentativeAndDate(currentRepID,month,year);
         for (Sales sale:salesList
              ) {
@@ -162,21 +158,35 @@ public class SalesReport_View extends AppCompatActivity {
 
     private void addToSalesTable(Sales sale) {
         TableRow row = new TableRow(this);
+        row.setBackgroundColor(Color.WHITE); // Set row background color
+        row.setPadding(8, 8, 8, 8); // Set padding for the row
+
         TextView textMonthView = new TextView(this);
-        textMonthView.setText(sale.getMonth()+"");
+        textMonthView.setText(MONTHS[sale.getMonth()]);
+        textMonthView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
         TextView textYearView = new TextView(this);
-        textYearView.setText(sale.getYear()+"");
-      /*  TextView textAreaView = new TextView(this);
-        textMonthView.setText(regionController.getRegionById(sale.getArea()));*/
+        textYearView.setText(String.valueOf(sale.getYear()));
+        textYearView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+        TextView textRegionView = new TextView(this);
+        Region region = regionController.getRegionById(sale.getRegionID());
+        textRegionView.setText(region.getRegionName());
+        textRegionView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
         TextView textAmountView = new TextView(this);
-        textAmountView.setText(sale.getAmount()+"");
+        textAmountView.setText(String.valueOf((long)sale.getAmount()));
+        textAmountView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+        // Add TextViews to the row
         row.addView(textMonthView);
         row.addView(textYearView);
+        row.addView(textRegionView);
         row.addView(textAmountView);
+
+        // Add the row to the sales table
         salesTable.addView(row);
     }
-
-
     private void setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.SalesReport_View), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

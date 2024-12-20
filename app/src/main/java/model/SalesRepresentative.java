@@ -1,5 +1,7 @@
 package model;
 
+import android.net.Uri;
+
 import androidx.annotation.NonNull;
 
 public class SalesRepresentative {
@@ -7,10 +9,12 @@ public class SalesRepresentative {
     private String name;
     private String phoneNumber;
     private String email;
+    private Uri imageUri;
     private int regionID;
 
     public SalesRepresentative(String s, int i) {
-
+        this.representativeID=i;
+        this.name=s;
     }
 
     public SalesRepresentative() {
@@ -35,6 +39,10 @@ public class SalesRepresentative {
         return email;
     }
 
+    public Uri getImageUri() {
+        return imageUri;
+    }
+
     public int getRegionID() {
         return regionID;
     }
@@ -45,6 +53,10 @@ public class SalesRepresentative {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setImageUri(Uri imageUri) {
+        this.imageUri = imageUri;
     }
 
     public void setName(String name) {

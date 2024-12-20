@@ -10,6 +10,7 @@ import java.util.List;
 
 import model.DatabaseHelper;
 import model.Commission;
+import model.Sales;
 
 
 public class CommissionController {
@@ -20,15 +21,33 @@ public class CommissionController {
         dbHelper = new DatabaseHelper(context);
     }
 
-    public void addCommission(Commission commission) {
+    public boolean addCommission(Commission commission) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("RepresentativeID", commission.getRepresentativeID());
         values.put("Month", commission.getMonth());
         values.put("Year", commission.getYear());
         values.put("Amount", commission.getAmount());
-        db.insert("Sales", null, values);
+        db.insert("Commission", null, values);
         db.close();
+        return false;
+    }
+
+    public boolean updateCommission(Commission commission) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("RepresentativeID", commission.getRepresentativeID());
+        values.put("Month", commission.getMonth());
+        values.put("Year", commission.getYear());
+        values.put("Amount", commission.getAmount());
+        db.update("Commission", values,
+                "RepresentativeID=? AND Month=? AND Year=?",
+                new String[]{
+                        String.valueOf(commission.getRepresentativeID()),
+                        String.valueOf(commission.getMonth()),
+                        String.valueOf(commission.getYear())});
+        db.close();
+        return false;
     }
 
     public List<Commission> getAllCommissions() {
@@ -54,7 +73,7 @@ public class CommissionController {
     public List<Commission> getCommissionsByRepresentativeAndDate(int representativeID,int month,int year){
         List<Commission> commissionList=new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String query="SELECT * FROM Sales WHERE RepresentativeID=? AND Month=? AND Year=?";
+        String query="SELECT * FROM Commission WHERE RepresentativeID=? AND Month=? AND Year=?";
         Cursor cursor = db.rawQuery(query,new String[]{String.valueOf(representativeID),String.valueOf(month),String.valueOf(year)});
 
         if (cursor.moveToFirst()) {

@@ -29,6 +29,26 @@ public class SalesController {
         return false;
     }
 
+    public boolean updateSale(Sales sale) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("RepresentativeID", sale.getRepresentativeID());
+        values.put("Month", sale.getMonth());
+        values.put("Year", sale.getYear());
+        values.put("RegionID",sale.getRegionID());
+        values.put("Amount", sale.getAmount());
+
+        db.update("Sales", values,
+                "RepresentativeID=? AND Month=? AND Year=?",
+                new String[]{
+                        String.valueOf(sale.getRepresentativeID()),
+                        String.valueOf(sale.getMonth()),
+                        String.valueOf(sale.getYear())});
+        db.close();
+        return false;
+    }
+
+
     public List<Sales> getAllSales() {
         List<Sales> salesList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
