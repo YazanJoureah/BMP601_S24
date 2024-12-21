@@ -39,11 +39,12 @@ public class SalesController {
         values.put("Amount", sale.getAmount());
 
         db.update("Sales", values,
-                "RepresentativeID=? AND Month=? AND Year=?",
+                "RepresentativeID=? AND Month=? AND Year=? AND RegionID=?",
                 new String[]{
                         String.valueOf(sale.getRepresentativeID()),
                         String.valueOf(sale.getMonth()),
-                        String.valueOf(sale.getYear())});
+                        String.valueOf(sale.getYear()),
+                        String.valueOf(sale.getRegionID())});
         db.close();
         return false;
     }
@@ -92,5 +93,29 @@ public class SalesController {
         cursor.close();
         db.close();
         return salesList;
+    }
+
+    public void deleteSale(Sales sale) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete("Sales",
+                "RepresentativeID=? AND Month=? AND Year=? AND RegionID=?",
+                new String[]{
+                        String.valueOf(sale.getRepresentativeID()),
+                        String.valueOf(sale.getMonth()),
+                        String.valueOf(sale.getYear()),
+                        String.valueOf(sale.getRegionID())});
+        db.close();
+    }
+
+    public void deleteAllSale(int currentRepresentativeId, int selectedMonth, int selectedYear) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete("Sales",
+                "RepresentativeID=? AND Month=? AND Year=? ",
+                new String[]{
+                        String.valueOf(currentRepresentativeId),
+                        String.valueOf(selectedMonth),
+                        String.valueOf(selectedYear),
+                        });
+        db.close();
     }
 }

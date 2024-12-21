@@ -1,4 +1,5 @@
 package com.example.helloworld;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -16,56 +17,49 @@ import model.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity {
 
-
     private TextView addSalesButton;
     private TextView repButton;
     private TextView salesReport;
     private TextView commissionReport;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        initializeViews();
+        setOnClickListeners();
+        applyWindowInsets();
+    }
 
+    private void initializeViews() {
+        addSalesButton = findViewById(R.id.addSalesButton);
+        repButton = findViewById(R.id.representativeButton);
+        salesReport = findViewById(R.id.salesReport);
+        commissionReport = findViewById(R.id.commissionReport);
         ImageView homeButton = findViewById(R.id.home_btn);
-        addSalesButton=findViewById(R.id.addSalesButton);
-        repButton=findViewById(R.id.representativeButton);
-        salesReport=findViewById(R.id.salesReport);
-        commissionReport=findViewById(R.id.commissionReport);
-        homeButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, RepresentativeView.class);
-            startActivity(intent);
-        });
 
-        repButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, RepresentativeView.class);
-            startActivity(intent);
-        });
+        homeButton.setOnClickListener(v -> navigateTo(RepresentativeView.class));
+    }
 
-        addSalesButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, Sales_View.class);
-            startActivity(intent);
-        });
+    private void setOnClickListeners() {
+        repButton.setOnClickListener(v -> navigateTo(RepresentativeView.class));
+        addSalesButton.setOnClickListener(v -> navigateTo(Sales_View.class));
+        salesReport.setOnClickListener(v -> navigateTo(SalesReport_View.class));
+        commissionReport.setOnClickListener(v -> navigateTo(CommissionReport_View.class));
+    }
 
-        salesReport.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, SalesReport_View.class);
-            startActivity(intent);
-        });
+    private void navigateTo(Class<?> destination) {
+        Intent intent = new Intent(MainActivity.this, destination);
+        startActivity(intent);
+    }
 
-        commissionReport.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, CommissionReport_View.class);
-            startActivity(intent);
-        });
-
+    private void applyWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-
     }
-
-
 }

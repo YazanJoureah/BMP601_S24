@@ -40,13 +40,13 @@ public class CommissionReport_View extends AppCompatActivity {
     private int month;
     private int year;
     // Create an array of months
-    String[] MONTHS = new String[] {
+    String[] MONTHS = new String[]{
             "Select Month", "January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"
     };
 
     // Create an array of years (e.g., from 2020 to 2030)
-    String[] YEARS = new String[] {
+    String[] YEARS = new String[]{
             "Select Year", "2020", "2021", "2022", "2023", "2024", "2025",
             "2026", "2027", "2028", "2029", "2030"
     };
@@ -73,7 +73,7 @@ public class CommissionReport_View extends AppCompatActivity {
 
     private void setupControllers() {
         representativeController = new RepresentativeController(this);
-        commissionController=new CommissionController(this);
+        commissionController = new CommissionController(this);
     }
 
     private void setupSpinners() {
@@ -144,10 +144,10 @@ public class CommissionReport_View extends AppCompatActivity {
         spinner.setOnItemSelectedListener(listener);
     }
 
-    private void getCommissions(){
+    private void getCommissions() {
         List<Commission> commissionsList;
-        commissionsList=commissionController.getCommissionsByRepresentativeAndDate(currentRepID,month,year);
-        for (Commission commission:commissionsList
+        commissionsList = commissionController.getCommissionsByRepresentativeAndDate(currentRepID, month, year);
+        for (Commission commission : commissionsList
         ) {
             addToCommissionsTable(commission);
         }
@@ -167,7 +167,7 @@ public class CommissionReport_View extends AppCompatActivity {
         textYearView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
         TextView textAmountView = new TextView(this);
-        textAmountView.setText(String.valueOf((long)commission.getAmount()));
+        textAmountView.setText(String.valueOf((long) commission.getAmount()));
         textAmountView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
         // Add TextViews to the row

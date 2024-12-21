@@ -41,13 +41,13 @@ public class SalesReport_View extends AppCompatActivity {
     private int month;
     private int year;
     // Create an array of months
-    String[] MONTHS = new String[] {
+    String[] MONTHS = new String[]{
             "Select Month", "January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"
     };
 
     // Create an array of years (e.g., from 2020 to 2030)
-    String[] YEARS = new String[] {
+    String[] YEARS = new String[]{
             "Select Year", "2020", "2021", "2022", "2023", "2024", "2025",
             "2026", "2027", "2028", "2029", "2030"
     };
@@ -76,8 +76,9 @@ public class SalesReport_View extends AppCompatActivity {
     private void setupControllers() {
         representativeController = new RepresentativeController(this);
         regionController = new RegionController(this);
-        salesController=new SalesController(this);
+        salesController = new SalesController(this);
     }
+
     private void setupSpinners() {
         setupRepresentativeSpinner();
         setupMonthSpinner();
@@ -147,11 +148,11 @@ public class SalesReport_View extends AppCompatActivity {
     }
 
 
-    private void getSales(){
-         List<Sales> salesList;
-         salesList=salesController.getSalesByRepresentativeAndDate(currentRepID,month,year);
-        for (Sales sale:salesList
-             ) {
+    private void getSales() {
+        List<Sales> salesList;
+        salesList = salesController.getSalesByRepresentativeAndDate(currentRepID, month, year);
+        for (Sales sale : salesList
+        ) {
             addToSalesTable(sale);
         }
     }
@@ -175,7 +176,7 @@ public class SalesReport_View extends AppCompatActivity {
         textRegionView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
         TextView textAmountView = new TextView(this);
-        textAmountView.setText(String.valueOf((long)sale.getAmount()));
+        textAmountView.setText(String.valueOf((long) sale.getAmount()));
         textAmountView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
         // Add TextViews to the row
@@ -187,6 +188,7 @@ public class SalesReport_View extends AppCompatActivity {
         // Add the row to the sales table
         salesTable.addView(row);
     }
+
     private void setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.SalesReport_View), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
